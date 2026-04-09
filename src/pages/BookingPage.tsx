@@ -147,7 +147,7 @@ export function BookingPage() {
               {bookingSchedule.map((day) => (
                 <article className="day-card" key={`${day.date}-${day.weekday}`}>
                   <header className="day-header">
-                    <div>
+                    <div className="day-date-label">
                       <strong>{day.date}</strong>
                       <span>{formatWeekday(day.weekday)}</span>
                     </div>

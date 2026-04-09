@@ -348,9 +348,11 @@ textarea {
   gap: 12px;
 }
 
-.day-header div {
-  display: grid;
-  gap: 4px;
+.day-date-label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .day-header strong {
