@@ -148,6 +148,7 @@ textarea {
 .booking-list-card h3 {
   margin: 0;
   color: #173a61;
+  overflow-wrap: anywhere;
 }
 
 .hero-copy h1 {
@@ -480,8 +481,16 @@ textarea {
   gap: 12px;
 }
 
+.booking-list-head > *,
+.booking-list-meta > *,
+.booking-list-main,
+.booking-list-submeta {
+  min-width: 0;
+}
+
 .booking-list-head {
   align-items: start;
+  flex-wrap: wrap;
 }
 
 .booking-list-head strong,
@@ -509,6 +518,7 @@ textarea {
   color: #173a61;
   font-size: 1rem;
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .booking-list-main em {
@@ -537,13 +547,18 @@ textarea {
 .booking-submitted-at {
   font-size: 0.7rem;
   color: #6f87a4;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: right;
+  margin-left: auto;
 }
 
 .booking-list-submeta p,
 .booking-list-submeta small {
   margin: 0;
   line-height: 1.4;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .booking-delete-button {
