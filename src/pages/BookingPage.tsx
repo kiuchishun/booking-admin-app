@@ -1,25 +1,27 @@
 import { useState } from 'react'
-import { bookingSchedule } from '../data/bookingSchedule.js'
-import { saveBooking } from '../lib/adminStorage.js'
+import type { ChangeEvent, FormEvent } from 'react'
+import { bookingSchedule } from '../data/bookingSchedule'
+import { saveBooking } from '../lib/adminStorage'
+import type { BookingFormValues, BookingSlot } from '../types'
 
-function formatWeekday(weekday) {
+function formatWeekday(weekday: string): string {
   return `(${weekday.replace('曜日', '')})`
 }
 
 export function BookingPage() {
-  const [selectedSlot, setSelectedSlot] = useState({
+  const [selectedSlot, setSelectedSlot] = useState<BookingSlot>({
     date: bookingSchedule[0].date,
     weekday: bookingSchedule[0].weekday,
     time: bookingSchedule[0].times[0],
   })
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<BookingFormValues>({
     name: '',
     phone: '',
     email: '',
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  function handleSubmit(event) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     saveBooking({
       ...formValues,
@@ -28,11 +30,13 @@ export function BookingPage() {
     setIsSubmitted(true)
   }
 
-  function handleChange(event) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
+    const fieldName = name as keyof BookingFormValues
+
     setFormValues((current) => ({
       ...current,
-      [name]: value,
+      [fieldName]: value,
     }))
   }
 

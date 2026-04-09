@@ -1,4 +1,9 @@
-export function TopNavigation({ isAdmin, onNavigate }) {
+type TopNavigationProps = {
+  isAdmin: boolean
+  onNavigate: (path: '/' | '/admin') => void
+}
+
+export function TopNavigation({ isAdmin, onNavigate }: TopNavigationProps) {
   return (
     <header className="topbar">
       <div className="brand-block">

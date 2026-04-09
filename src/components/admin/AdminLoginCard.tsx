@@ -1,4 +1,22 @@
-export function AdminLoginCard({ error, password, onPasswordChange, onSubmit }) {
+import type { ChangeEvent, FormEvent } from 'react'
+
+type AdminLoginCardProps = {
+  error: string
+  password: string
+  onPasswordChange: (value: string) => void
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void
+}
+
+export function AdminLoginCard({
+  error,
+  password,
+  onPasswordChange,
+  onSubmit,
+}: AdminLoginCardProps) {
+  function handlePasswordInput(event: ChangeEvent<HTMLInputElement>) {
+    onPasswordChange(event.target.value)
+  }
+
   return (
     <main className="page-shell">
       <section className="hero-card admin-auth-card">
@@ -18,7 +36,7 @@ export function AdminLoginCard({ error, password, onPasswordChange, onSubmit }) 
               name="password"
               placeholder="管理用パスワード"
               value={password}
-              onChange={(event) => onPasswordChange(event.target.value)}
+              onChange={handlePasswordInput}
             />
           </label>
 

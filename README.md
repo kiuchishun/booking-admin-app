@@ -1,6 +1,6 @@
 # booking-admin-app
 
-予約フォームと管理画面をひとつにまとめた、React + Vite ベースのフロントエンドアプリです。
+予約フォームと管理画面をひとつにまとめた、React + Vite + TypeScript ベースのフロントエンドアプリです。
 
 利用者は予約ページから希望日時を選んで申込みでき、管理者は `/admin` でログインして予約状況の確認や削除を行えます。データ保存にはバックエンドではなく、ブラウザの `localStorage` を利用しています。
 
@@ -23,6 +23,7 @@
 - 予約の個別削除
 - 予約の全件クリア
 - `storage` イベントと `focus` を使ったデータ再同期
+- TypeScript による props・ストレージデータ・イベント型の明示
 
 ## 動作環境
 
@@ -62,7 +63,7 @@ npm run dev
 
 ## ビルド
 
-本番用ビルドを作成します。
+TypeScript の型チェックを行ったうえで本番用ビルドを作成します。
 
 ```bash
 npm run build
@@ -79,13 +80,13 @@ npm run preview
 ## 利用できるスクリプト
 
 - `npm run dev`: 開発サーバーを起動
-- `npm run build`: 本番用ビルドを作成
+- `npm run build`: TypeScript 型チェック + 本番用ビルド
 - `npm run preview`: ビルド結果をローカル確認
 - `npm run lint`: ESLint を実行
 
 ## データ保存について
 
-このアプリは API やデータベースを利用していません。  
+このアプリは API やデータベースを利用していません。
 予約データはブラウザの `localStorage` に保存され、管理画面のログイン状態は `sessionStorage` に保存されます。
 
 保存キーは以下のとおりです。
@@ -104,17 +105,21 @@ src/
   data/
   lib/
   pages/
-  App.jsx
+  types.ts
+  App.tsx
   App.css
-  main.jsx
+  main.tsx
+  vite-env.d.ts
 public/
+tsconfig.json
+vite.config.ts
 ```
 
 主なファイルの役割:
 
-- `src/pages/BookingPage.jsx`: 予約入力画面
-- `src/pages/AdminPage.jsx`: 管理画面と認証制御
-- `src/lib/adminStorage.js`: `localStorage` の読み書き
-- `src/data/bookingSchedule.js`: 予約候補日時の定義
-- `src/data/adminData.js`: 初期表示用データの定義
-
+- `src/pages/BookingPage.tsx`: 予約入力画面
+- `src/pages/AdminPage.tsx`: 管理画面と認証制御
+- `src/lib/adminStorage.ts`: `localStorage` の読み書き
+- `src/data/bookingSchedule.ts`: 予約候補日時の定義
+- `src/data/adminData.ts`: 初期表示用データの定義
+- `src/types.ts`: 共通の TypeScript 型定義

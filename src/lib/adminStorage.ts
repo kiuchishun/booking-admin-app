@@ -1,6 +1,11 @@
-import { createInitialPeople, storageKey } from '../data/adminData.js'
+import { createInitialPeople, storageKey } from '../data/adminData'
+import type { BookingFormValues, BookingSlot, Person, Schedule } from '../types'
 
-export function loadPeople() {
+type SaveBookingInput = BookingFormValues & {
+  slot: BookingSlot
+}
+
+export function loadPeople(): Person[] {
   const saved = window.localStorage.getItem(storageKey)
 
   if (!saved) {
@@ -10,8 +15,8 @@ export function loadPeople() {
   }
 
   try {
-    const parsed = JSON.parse(saved)
-    return Array.isArray(parsed) ? parsed : createInitialPeople()
+    const parsed: unknown = JSON.parse(saved)
+    return Array.isArray(parsed) ? (parsed as Person[]) : createInitialPeople()
   } catch {
     const initialPeople = createInitialPeople()
     savePeople(initialPeople)
@@ -19,16 +24,16 @@ export function loadPeople() {
   }
 }
 
-export function savePeople(people) {
+export function savePeople(people: Person[]): void {
   window.localStorage.setItem(storageKey, JSON.stringify(people))
 }
 
-export function saveBooking({ name, phone, email, slot }) {
+export function saveBooking({ name, phone, email, slot }: SaveBookingInput): void {
   const people = loadPeople()
   const normalizedEmail = email.trim().toLowerCase()
   const normalizedPhone = phone.trim()
   const normalizedName = name.trim()
-  const schedule = {
+  const schedule: Schedule = {
     id: crypto.randomUUID(),
     title: '予約',
     date: slot.date,
@@ -56,7 +61,7 @@ export function saveBooking({ name, phone, email, slot }) {
     return
   }
 
-  const nextPeople = [
+  const nextPeople: Person[] = [
     {
       id: crypto.randomUUID(),
       name: normalizedName || '未入力',
@@ -72,7 +77,7 @@ export function saveBooking({ name, phone, email, slot }) {
   savePeople(nextPeople)
 }
 
-export function removeBooking(personId, scheduleId) {
+export function removeBooking(personId: string, scheduleId: string): Person[] {
   const nextPeople = loadPeople().map((person) => {
     if (person.id !== personId) {
       return person
@@ -88,7 +93,7 @@ export function removeBooking(personId, scheduleId) {
   return nextPeople
 }
 
-export function clearAllBookings() {
+export function clearAllBookings(): Person[] {
   const nextPeople = loadPeople().map((person) => ({
     ...person,
     schedules: [],

@@ -1,6 +1,8 @@
+import type { Person, Schedule } from '../types'
+
 export const storageKey = 'admin-people-schedule'
 
-export function createInitialPeople() {
+export function createInitialPeople(): Person[] {
   return [
     {
       id: crypto.randomUUID(),
@@ -43,6 +45,6 @@ export function createInitialPeople() {
   ]
 }
 
-export function formatScheduleLabel(schedule) {
+export function formatScheduleLabel(schedule: Schedule): string {
   return `${schedule.date} ${schedule.time} / ${schedule.title}`
 }

@@ -1,6 +1,17 @@
-import { BookingCard } from './BookingCard.jsx'
+import { BookingCard } from './BookingCard'
+import type { Person, Schedule } from '../../types'
 
-function EmptyState({ onClearAll }) {
+type PeopleBoardProps = {
+  people: Person[]
+  onDeleteBooking: (personId: string, scheduleId: string) => void
+  onClearAll: () => void
+}
+
+type EmptyStateProps = {
+  onClearAll: () => void
+}
+
+function EmptyState({ onClearAll }: EmptyStateProps) {
   return (
     <section className="panel-card stack-panel">
       <div className="section-title-row">
@@ -14,7 +25,7 @@ function EmptyState({ onClearAll }) {
   )
 }
 
-function parseScheduleDateTime(schedule) {
+function parseScheduleDateTime(schedule: Schedule): Date | null {
   const time = schedule.time || '00:00'
 
   if (/^\d{4}-\d{2}-\d{2}$/.test(schedule.date)) {
@@ -34,17 +45,21 @@ function parseScheduleDateTime(schedule) {
   return new Date(`${normalizedDate}T${time}:00`)
 }
 
-function getSortValue(schedule) {
+function getSortValue(schedule: Schedule): number {
   const parsed = parseScheduleDateTime(schedule)
   return parsed && !Number.isNaN(parsed.getTime()) ? parsed.getTime() : Number.MAX_SAFE_INTEGER
 }
 
-function getSubmittedSortValue(schedule) {
+function getSubmittedSortValue(schedule: Schedule): number {
   const parsed = schedule.createdAt ? new Date(schedule.createdAt) : null
   return parsed && !Number.isNaN(parsed.getTime()) ? parsed.getTime() : Number.MAX_SAFE_INTEGER
 }
 
-export function PeopleBoard({ people, onDeleteBooking, onClearAll }) {
+export function PeopleBoard({
+  people,
+  onDeleteBooking,
+  onClearAll,
+}: PeopleBoardProps) {
   const bookings = people
     .flatMap((person) =>
       person.schedules.map((schedule) => ({

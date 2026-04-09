@@ -1,4 +1,10 @@
-export function AdminSummary({ people }) {
+import type { Person } from '../../types'
+
+type AdminSummaryProps = {
+  people: Person[]
+}
+
+export function AdminSummary({ people }: AdminSummaryProps) {
   const totalSchedules = people.reduce((total, person) => total + person.schedules.length, 0)
   const peopleWithSchedules = people.filter((person) => person.schedules.length > 0).length
 

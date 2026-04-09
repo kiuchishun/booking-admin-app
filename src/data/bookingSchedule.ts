@@ -1,4 +1,6 @@
-export const bookingSchedule = [
+import type { BookingScheduleDay } from '../types'
+
+export const bookingSchedule: BookingScheduleDay[] = [
   {
     date: '4/15',
     weekday: '火',

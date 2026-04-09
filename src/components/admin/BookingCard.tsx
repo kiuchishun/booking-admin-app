@@ -1,8 +1,16 @@
-function formatWeekday(weekday) {
+import type { Person, Schedule } from '../../types'
+
+type BookingCardProps = {
+  person: Person
+  schedule: Schedule
+  onDelete: (personId: string, scheduleId: string) => void
+}
+
+function formatWeekday(weekday?: string): string {
   return weekday ? `(${weekday.replace('曜日', '')})` : ''
 }
 
-function getScheduleWeekday(schedule) {
+function getScheduleWeekday(schedule: Schedule): string {
   if (schedule.weekday) {
     return schedule.weekday
   }
@@ -14,7 +22,7 @@ function getScheduleWeekday(schedule) {
   return ''
 }
 
-function formatSubmittedAt(createdAt) {
+function formatSubmittedAt(createdAt?: string): string {
   if (!createdAt) {
     return '未記録'
   }
@@ -34,16 +42,13 @@ function formatSubmittedAt(createdAt) {
   }).format(date)
 }
 
-export function BookingCard({ person, schedule, onDelete }) {
+export function BookingCard({ person, schedule, onDelete }: BookingCardProps) {
   const weekday = getScheduleWeekday(schedule)
   const scheduleDateLabel = [schedule.date, formatWeekday(weekday)].filter(Boolean).join(' ')
   const submittedAtLabel = formatSubmittedAt(schedule.createdAt)
-  const noteLabel =
-    schedule.note && !schedule.note.endsWith('曜日') ? schedule.note : ''
+  const noteLabel = schedule.note && !schedule.note.endsWith('曜日') ? schedule.note : ''
   const supplementalLabel =
-    schedule.location && schedule.location !== '予約ページ'
-      ? schedule.location
-      : noteLabel
+    schedule.location && schedule.location !== '予約ページ' ? schedule.location : noteLabel
 
   return (
     <article className="booking-list-card">
