@@ -24,7 +24,7 @@ export function AdminLoginCard({
           <p className="eyebrow">Admin Login</p>
           <h1>管理画面ログイン</h1>
           <p className="lead">
-            開発中の簡易認証です。`.env.development.local` に設定した管理用パスワードを入力してください。
+            開発中のデモ認証です。1234を入力してください。
           </p>
         </div>
 
