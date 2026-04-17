@@ -1,5 +1,10 @@
 # booking-admin-app
 
+## 公開URL
+
+- https://booking-admin-app.vercel.app/
+- 管理画面: https://booking-admin-app.vercel.app/admin
+
 予約フォームと管理画面をひとつにまとめた、React + Vite + TypeScript ベースのフロントエンドアプリです。
 
 利用者は予約ページから希望日時を選んで申込みでき、管理者は `/admin` でログインして予約状況の確認や削除を行えます。データ保存にはバックエンドではなく、ブラウザの `localStorage` を利用しています。
